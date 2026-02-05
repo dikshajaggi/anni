@@ -60,6 +60,31 @@
             animation: float 3s ease-in-out infinite;
         }
 
+        /* Gift Box Styles */
+        .gift-container {
+            margin: 50px 0;
+            position: relative;
+        }
+
+        .gift-box {
+            font-size: 8em;
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.1);
+        }
+
+        .click-instruction {
+            font-size: 1.2em;
+            color: #c51162;
+            margin-top: 10px;
+            animation: pulse 1.5s infinite;
+        }
+
         .message {
             font-size: 1.3em;
             color: #880e4f;
@@ -69,6 +94,16 @@
             background: rgba(255, 255, 255, 0.6);
             border-radius: 20px;
             animation: fadeIn 2.5s ease-in;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+
+        .message.revealed {
+            max-height: 500px;
+            opacity: 1;
+            animation: revealMessage 0.8s ease-out;
         }
 
         .decorative-hearts {
@@ -163,6 +198,22 @@
             50% { transform: scale(1.2); }
         }
 
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes revealMessage {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
         .anniversary-date {
             font-size: 1.5em;
             color: #ad1457;
@@ -195,6 +246,7 @@
             h1 { font-size: 2.5em; }
             .couple-names { font-size: 1.8em; }
             .couple-emoji { font-size: 5em; }
+            .gift-box { font-size: 5em; }
             .message { font-size: 1.1em; }
         }
     </style>
@@ -235,7 +287,13 @@
             <div class="couple-emoji">👫</div>
         </div>
 
-        <div class="message">
+        <!-- Gift Box Section -->
+        <div class="gift-container">
+            <div class="gift-box" id="giftBox" onclick="revealMessage()">🎁</div>
+            <div class="click-instruction" id="clickText">Click the gift 🎉</div>
+        </div>
+
+        <div class="message" id="message">
             Wishing you both a lifetime of love, laughter, and endless happiness together! 
             <br><br>
             May your love continue to grow stronger with each passing day, 
@@ -248,10 +306,23 @@
             💝 💐 💝
         </div>
 
-
         <div class="decorative-hearts">
             ❤️ 💕 💖 💗 💕 ❤️
         </div>
     </div>
+
+    <script>
+        function revealMessage() {
+            const message = document.getElementById('message');
+            const giftBox = document.getElementById('giftBox');
+            const clickText = document.getElementById('clickText');
+            
+            if (!message.classList.contains('revealed')) {
+                message.classList.add('revealed');
+                giftBox.textContent = '🎊';
+                clickText.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
